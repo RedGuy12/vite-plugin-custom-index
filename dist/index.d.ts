@@ -1,7 +1,7 @@
-import { Connect, Plugin } from 'vite';
+import { Plugin } from 'vite';
 
 declare type ModeOptions = {
-    index: string | ((request: Connect.IncomingMessage) => string);
+    index: string | ((path: string) => string);
     treatAsHtml?: string[];
 };
 declare type ResolvedPluginOptions = {

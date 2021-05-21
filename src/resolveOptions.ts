@@ -1,7 +1,7 @@
 import { Connect } from "vite";
 
 type ModeOptions = {
-  index: string | ((request: Connect.IncomingMessage) => string);
+  index: string | ((path: string) => string);
   treatAsHtml?: string[];
 };
 

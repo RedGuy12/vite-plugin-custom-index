@@ -3,6 +3,7 @@ import { PLUGIN_IDENTIFIER } from "./constants";
 import { createDevPlugin } from "./devPlugin";
 import { PluginOptions, resolveOptions } from "./resolveOptions";
 import { debug } from "./logger";
+import { createBuildPlugin } from "./buildPlugin";
 
 export default function (options: PluginOptions): Plugin[] {
   const resolvedOptions = resolveOptions(options);
@@ -11,5 +12,5 @@ export default function (options: PluginOptions): Plugin[] {
     return [];
   }
 
-  return [createDevPlugin(resolvedOptions)];
+  return [createDevPlugin(resolvedOptions), createBuildPlugin(resolvedOptions)];
 }
