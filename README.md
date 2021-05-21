@@ -12,7 +12,7 @@
 npm install vite-plugin-custom-index --save-dev
 ```
 
-#### Basic config
+#### Options
 
 ```javascript
 import customIndex from "vite-plugin-custom-index";
