@@ -74,8 +74,8 @@ export function createDevPlugin(options: ResolvedPluginOptions): Plugin {
                 typeof options.dev.index === "string"
                   ? options.dev.index
                   : options.dev.index?.(request.url) ?? request.url;
-              if (!request.url?.startsWith("/")) {
-                request.url = `/${request.url}`;
+              if (request.url?.startsWith("/")) {
+                request.url = request.url?.slice(1);
               }
 
               if (request.originalUrl) {
@@ -85,11 +85,6 @@ export function createDevPlugin(options: ResolvedPluginOptions): Plugin {
               }
 
               debug`New path: ${request.url}`;
-              if (request.url?.endsWith(".html")) {
-                debug`New path ends with .html, skipping`;
-                // Files ending in .html will get handled by vite automatically
-                return next();
-              }
               await sendTransformedHtmlFromFile(viteServer, request, response);
             } catch (error) {
               return next(error);

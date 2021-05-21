@@ -12,19 +12,10 @@ export function createBuildPlugin(options: ResolvedPluginOptions): Plugin {
     enforce: "pre",
     apply: "build",
 
-    async transformIndexHtml() {
-      debug`Transforming custom index in transformIndexHtml()`;
-      return fs.readFile(
-        typeof options.build.index === "string"
-          ? options.build.index
-          : options.build.index?.("/index.html") ?? "/index.html",
-        {
-          encoding: "utf-8",
-        }
-      );
-    },
-
     resolveId(id: string) {
+      console.log(id);
+      if (id.endsWith("/index.html")) return id;
+
       if (
         options.build.treatAsHtml?.some((extension) => id.endsWith(extension))
       ) {
@@ -41,12 +32,23 @@ export function createBuildPlugin(options: ResolvedPluginOptions): Plugin {
     },
     async load(id) {
       let fileToRead;
-      if (fakeHtmlToRealPathMap[id]) {
+      if (id.endsWith("/index.html")) {
+        debug`Detected load(/index.html)`;
+
+        fileToRead =
+          typeof options.build.index === "string"
+            ? options.build.index
+            : options.build.index?.(id) ?? id;
+      } else if (fakeHtmlToRealPathMap[id]) {
         debug`Detected extension to treat as HTML load(${id})`;
         fileToRead = fakeHtmlToRealPathMap[id];
       }
 
       if (fileToRead) {
+        if (fileToRead.startsWith("/")) {
+          fileToRead = fileToRead.slice(1);
+        }
+
         debug`Read path: ${fileToRead}`;
         return await fs.readFile(fileToRead, {
           encoding: "utf-8",
