@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-custom-index",
   "version": "1.0.0",
-  "description": "",
+  "description": "Define a custom file for Vite to use as your index.html file",
   "repository": {
     "type": "git",
     "url": "https://github.com/jdf221/vite-plugin-custom-index"
@@ -16,7 +16,6 @@
     "build": "tsup-node src/index.ts --dts --format cjs,esm",
     "dev": "npm run build -- --watch"
   },
-  "keywords": [],
   "author": "Jared (jdf2)",
   "license": "MIT",
   "devDependencies": {

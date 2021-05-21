@@ -1,5 +1,4 @@
-import { Plugin, ViteDevServer } from "vite";
-import { PLUGIN_IDENTIFIER } from "./constants";
+import { Plugin } from "vite";
 import { createDevPlugin } from "./devPlugin";
 import { PluginOptions, resolveOptions } from "./resolveOptions";
 import { debug } from "./logger";

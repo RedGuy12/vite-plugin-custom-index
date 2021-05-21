@@ -1,7 +1,7 @@
 import { Plugin } from 'vite';
 
 declare type ModeOptions = {
-    index: string | ((path: string) => string);
+    index?: string | ((path: string) => string);
     treatAsHtml?: string[];
 };
 declare type ResolvedPluginOptions = {

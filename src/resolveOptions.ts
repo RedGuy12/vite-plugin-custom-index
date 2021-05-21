@@ -1,7 +1,5 @@
-import { Connect } from "vite";
-
-type ModeOptions = {
-  index: string | ((path: string) => string);
+export type ModeOptions = {
+  index?: string | ((path: string) => string);
   treatAsHtml?: string[];
 };
 

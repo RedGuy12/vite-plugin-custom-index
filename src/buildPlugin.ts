@@ -37,7 +37,7 @@ export function createBuildPlugin(options: ResolvedPluginOptions): Plugin {
         fileToRead =
           typeof options.build.index === "string"
             ? options.build.index
-            : options.build.index(id);
+            : options.build.index?.(id) ?? id;
       } else if (fakeHtmlToRealPathMap[id]) {
         debug`Detected extension to treat as HTML load(${id})`;
         fileToRead = fakeHtmlToRealPathMap[id];
