@@ -12,9 +12,19 @@ export function createBuildPlugin(options: ResolvedPluginOptions): Plugin {
     enforce: "pre",
     apply: "build",
 
-    resolveId(id: string) {
-      if (id.endsWith("/index.html")) return id;
+    async transformIndexHtml() {
+      debug`Transforming custom index in transformIndexHtml()`;
+      return fs.readFile(
+        typeof options.build.index === "string"
+          ? options.build.index
+          : options.build.index?.("/index.html") ?? "/index.html",
+        {
+          encoding: "utf-8",
+        }
+      );
+    },
 
+    resolveId(id: string) {
       if (
         options.build.treatAsHtml?.some((extension) => id.endsWith(extension))
       ) {
@@ -31,14 +41,7 @@ export function createBuildPlugin(options: ResolvedPluginOptions): Plugin {
     },
     async load(id) {
       let fileToRead;
-      if (id.endsWith("/index.html")) {
-        debug`Detected load(/index.html)`;
-
-        fileToRead =
-          typeof options.build.index === "string"
-            ? options.build.index
-            : options.build.index?.(id) ?? id;
-      } else if (fakeHtmlToRealPathMap[id]) {
+      if (fakeHtmlToRealPathMap[id]) {
         debug`Detected extension to treat as HTML load(${id})`;
         fileToRead = fakeHtmlToRealPathMap[id];
       }
