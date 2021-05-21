@@ -1,6 +1,9 @@
 {
+  "publishConfig": {
+    "access": "public"
+  },
   "name": "vite-plugin-custom-index",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "Define a custom file for Vite to use as your index.html file",
   "repository": {
     "type": "git",
